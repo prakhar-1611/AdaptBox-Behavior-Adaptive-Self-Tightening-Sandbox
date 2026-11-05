@@ -27,3 +27,7 @@ Thumbs.db
 .DS_Store
 desktop.ini
 *.tmp
+
+# report screenshots (kept local)
+review2_shots/
+review3-shots/
