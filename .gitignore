@@ -1,0 +1,29 @@
+# runtime output
+runs/
+eval/results/
+adaptbox/models/*.joblib
+
+# design and browser tooling
+.taste-skill/
+.playwright-mcp/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# sample scratch output
+samples/**/workspace/
+samples/**/primes_result.txt
+
+# review/report documents (kept out of the code repo)
+*.docx
+~$*
+*.pdf
+
+# OS / editor cruft
+Thumbs.db
+.DS_Store
+desktop.ini
+*.tmp

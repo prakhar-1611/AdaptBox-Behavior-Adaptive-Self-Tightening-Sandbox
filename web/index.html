@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdaptBox Monitor</title>
+  <meta name="description" content="Live monitor for AdaptBox, a sandbox that scores untrusted code's system calls and tightens its confinement in four stages.">
+  <meta name="color-scheme" content="dark">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='3' width='26' height='26' rx='5' fill='none' stroke='%234a8ad6' stroke-width='2.5'/%3E%3Cpath d='M9 22h4.5v-4.5H18V13h4.5V9' fill='none' stroke='%234a8ad6' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="app.css?v=11">
+</head>
+<body>
+  <div class="shell">
+    <aside class="rail" aria-label="AdaptBox">
+      <a href="#/live" aria-label="AdaptBox home">
+        <svg class="mark" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="26" height="26" rx="5"/>
+          <path d="M9 22h4.5v-4.5H18V13h4.5V9"/>
+        </svg>
+      </a>
+      <nav aria-label="Screens">
+        <a class="rail-link" href="#/live" data-route="live">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>
+          <span class="label">Live</span><span class="tip">Live monitor</span>
+        </a>
+        <a class="rail-link" href="#/test" data-route="test">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7l-4 5 4 5M16 7l4 5-4 5"/></svg>
+          <span class="label">Test</span><span class="tip">Test your own code</span>
+        </a>
+        <a class="rail-link" href="#/runs" data-route="runs">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+          <span class="label">Runs</span><span class="tip">Saved runs</span>
+        </a>
+        <a class="rail-link" href="#/benchmark" data-route="benchmark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V11M12 20V4M19 20v-6M3 20h18"/></svg>
+          <span class="label">Benchmark</span><span class="tip">Benchmark</span>
+        </a>
+        <a class="rail-link" href="#/how" data-route="how">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="7" height="6" rx="1"/><rect x="14" y="14" width="7" height="6" rx="1"/><path d="M10 7h3.5A2.5 2.5 0 0 1 16 9.5V14"/></svg>
+          <span class="label">How</span><span class="tip">How it works</span>
+        </a>
+      </nav>
+      <div class="rail-foot">
+        <div class="engine-dot" id="engine-dot" data-state="connecting" tabindex="0" role="status" aria-label="Engine: connecting">
+          <i></i><span class="tip" id="engine-tip">Connecting to the engine</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="canvas" id="view" tabindex="-1"></main>
+  </div>
+
+  <!-- bump ?v= when these change, so browsers never mix an old file with a new one -->
+  <script src="demo-data.js?v=11"></script>
+  <script src="engine.js?v=11"></script>
+  <script src="chart.js?v=11"></script>
+  <script src="app.js?v=11"></script>
+</body>
+</html>

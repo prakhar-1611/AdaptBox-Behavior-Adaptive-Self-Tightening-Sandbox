@@ -1,0 +1,53 @@
+{
+  "_note": "What each sample is for, shown in the dashboard. 'why' = the role it plays in the test set, 'does' = what the script actually does, 'expect' = what AdaptBox should do about it.",
+  "benign/compute.py": {
+    "why": "Ordinary number crunching, the most common kind of AI-written helper code.",
+    "does": "Finds every prime below 200,000 and writes the count to primes_result.txt.",
+    "expect": "Runs free. It only opens the files Python needs, so no rule fires and the score stays at 0."
+  },
+  "benign/file_tool.py": {
+    "why": "Normal file handling, to show that writing files is not treated as an attack.",
+    "does": "Creates 20 small files in workspace/, reads them back and adds up their size.",
+    "expect": "Runs free. No rule watches ordinary files in its own folder."
+  },
+  "benign/single_fetch.py": {
+    "why": "One honest network call, like a script fetching from an API, must not be punished.",
+    "does": "Makes a single connection to 127.0.0.1 port 80.",
+    "expect": "Runs free. One connect adds 0.15, below the 0.35 that cuts the network."
+  },
+  "malicious/fork_storm.py": {
+    "why": "Fork bomb: fills the process table until the machine stops responding.",
+    "does": "Forks child processes as fast as it can (capped at 2,000 and 5 seconds for safety).",
+    "expect": "The fork-burst rule adds 0.40 every window, so it climbs through the stages; pids.max (256) stops the flood."
+  },
+  "malicious/mem_hog.py": {
+    "why": "Memory exhaustion: takes RAM until the host swaps or the OOM killer fires.",
+    "does": "Allocates and touches 64 MiB blocks, up to 4 GiB.",
+    "expect": "The memory-growth rule adds 0.35 per window; memory.max (1 GiB) ends it through the kernel's OOM killer."
+  },
+  "malicious/net_scan.py": {
+    "why": "Network scan: probes many ports looking for services to attack.",
+    "does": "Tries 1,024 TCP ports, on 127.0.0.1 only.",
+    "expect": "The connect-burst rule adds 0.35: stage 1 cuts the network."
+  },
+  "malicious/read_secrets.py": {
+    "why": "Credential theft: reads password hashes, SSH keys and cloud keys.",
+    "does": "Opens /etc/shadow, /etc/sudoers, ~/.ssh/id_rsa, ~/.aws/credentials and /proc/self/environ, and prints only their sizes.",
+    "expect": "Each secret adds 0.40, so all four stages fire at once. It finishes in about 0.1 s, before the first window, so what it read counts as damage before containment."
+  },
+  "malicious/persistence.py": {
+    "why": "Persistence and privilege escalation: staying on the machine and becoming root.",
+    "does": "Tries to add an SSH key to authorized_keys, drop a cron job in /etc/cron.d, append to ~/.bashrc, and call setuid(0). All are blocked, but the attempts are made.",
+    "expect": "The system-write rule fires on each protected path (+0.45) and the privilege-escalation rule on setuid(0) (+0.50), so the score crosses several stages."
+  },
+  "malicious/shell_spawn.py": {
+    "why": "Reverse shell: the first step of an attacker taking control of the machine.",
+    "does": "Connects to 127.0.0.1:9999, then starts /bin/sh (not wired to the socket, so it opens no real backdoor).",
+    "expect": "Shell spawn adds 0.45 and the connect 0.15: score 0.60, stage 2."
+  },
+  "malicious/slow_escalation.py": {
+    "why": "A staged intrusion that gets worse every 2 seconds, to show the stages one at a time.",
+    "does": "Reads /etc/shadow, then tries connects, then starts a shell and connects again, then reads more secrets and bursts forks.",
+    "expect": "One stage per phase: network cut, writes blocked, CPU and memory capped, killed. Its own output shows each stage working."
+  }
+}

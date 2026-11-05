@@ -1,0 +1,5 @@
+scikit-learn>=1.3
+numpy>=1.24
+psutil>=5.9
+rich>=13.0
+# bcc / python3-bpfcc are installed via apt, not pip
